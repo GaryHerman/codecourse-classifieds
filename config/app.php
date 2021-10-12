@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Provider for View Composers and Registration of View Composers
+        App\Providers\ComposerServiceProvider::class,
+
     ],
 
     /*
