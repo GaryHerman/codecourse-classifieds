@@ -28,8 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //Paginator::useBootstrap();
-
         Area::creating(function ($area) {
             $area->slug = $this->slugifyNested($area);
         });

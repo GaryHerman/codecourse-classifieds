@@ -17,4 +17,16 @@ class Category extends Model
     {
         return 'slug';
     }
+
+    public function scopeWithListingsInArea($query, Area $area)
+    {
+        return $query->with(['listings' => function ($q) use ($area) {
+            $q->isLive()->inArea($area);
+        }]);
+    }
+
+    public function listings()
+    {
+        return $this->hasMany(Listing::class);
+    }
 }

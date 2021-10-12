@@ -36,6 +36,10 @@ Route::prefix('/{area}')->group(function () {
                 ->name('listings.index');
         });
     });
+
+    // Listings
+    Route::get('/{listing}', [ListingController::class, 'show'])
+        ->name('listings.show');
 });
 
 Auth::routes();
