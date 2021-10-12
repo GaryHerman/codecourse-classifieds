@@ -17,7 +17,7 @@ class Listing extends Model
     // Convenience Functions
     // ------------------------------------------------------
 
-    public function isLive()
+    public function live()
     {
         return $this->live;
     }
@@ -52,9 +52,11 @@ class Listing extends Model
     }
 
     // TODO: Should be looking for the Area in-between rgt and lft values not like this
+    // Perhaps something like (wont work as needs subquery), return $query->whereBetween('_lft', $area->getBounds());
+
     public function scopeInArea($query, Area $area)
     {
-        return $query->where('area_id', array_merge(
+        return $query->whereIn('area_id', array_merge(
             [$area->id], $area->descendants->pluck('id')->toArray()
         ));
     }
