@@ -18,15 +18,17 @@
                     <div class="row">
                         @foreach ($areas as $country)
                             <div class="col-md-12">
-                                <h4><a href="{{ route('user.area.store', $country) }}"><strong>{{ $country->name }}</strong></a></h3>
+                                <h4><a href="{{ route('user.area.store', $country) }}"><strong>{{ $country->name }}</strong></a></h4>
                                 <hr>
                                 <div class="row">
                                     @foreach ($country->children as $state)
                                         <div class="col-md-4">
-                                            <h5 style="margin-top: 15px;"><a href="{{ route('user.area.store', $state) }}"><strong>{{ $state->name }}</strong></a></h4>
+                                            <h5 style="margin-top: 15px;">
+                                                <a href="{{ route('user.area.store', $state) }}"><strong>{{ $state->name }}</strong></a>
+                                            </h5>
                                             <hr>
                                             @foreach ($state->children as $area)
-                                                <h6><a href="{{ route('user.area.store', $area) }}">{{ $area->name }}</a></h5>
+                                                <h6><a href="{{ route('user.area.store', $area) }}">{{ $area->name }}</a></h6>
                                             @endforeach
                                         </div>
                                     @endforeach

@@ -39,28 +39,12 @@ class AppServiceProvider extends ServiceProvider
     private function slugifyNested($nestedVar)
     {
         // Create a area slug on model creating event.  Slug can be parsed back in to determine structure because,
-        // '-' means one tree level difference, '.' means replacement for spaces
+        // '.' means one tree level difference, '-' means replacement for spaces
+        $tree = $nestedVar->ancestors->reverse()->push($nestedVar);
 
-        $ancestorNames = '';
-
-        foreach ($nestedVar->ancestors as $ancestor) {
-            $currentName = Str::of($ancestor->name)->slug('.');
-
-            if ($ancestorNames == '') {
-                $ancestorNames = $currentName;
-            } else {
-                $ancestorNames = $ancestorNames . '-' . $currentName;
-            }
-        }
-
-        // If there are no ancestors, just use area->name, if there are ancestors then add area->name
-        if ($ancestorNames == '') {
-            $slug = Str::of($nestedVar->name)->slug('.');
-        } else {
-            $slug = $ancestorNames . '-' . Str::of($nestedVar->name)->slug('.');
-        }
-
-        $slug = Str::lower($slug);
+        $slug = $tree->map(function ($e) {
+            return Str::of($e->name)->slug('-');
+        })->join('.');
 
         return $slug;
     }

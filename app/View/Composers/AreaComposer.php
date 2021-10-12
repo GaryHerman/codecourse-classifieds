@@ -14,7 +14,7 @@ class AreaComposer
         // TODO: US Should be in a config somewhere as the default area (not hard-coded here)
 
         if (! $this->area) {
-            $this->area = Area::where('slug', session()->get('area', config()->get('app.classifieds.defaults.area')))->first();
+            $this->area = Area::where('slug', session()->get('area', config()->get('base.defaults.area')))->first();
         }
 
         return $view->with('area', $this->area);
