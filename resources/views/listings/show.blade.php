@@ -50,8 +50,17 @@
                     <div class="card-body">
                         <nav class="nav flex-column">
                             <li class="nav-item"><a href="">Email to a friend</a></li>
-                            <li class="nav-item"><a href="">Add to favorites</a></li>
-                            <li class="nav-item"><a href=""></a></li>
+                            @if (! $listing->favoritedBy(Auth::user()))
+                                <li class="nav-item">
+                                    <a href="#" onclick="event.preventDefault(); getElementById('listings-favorite-form').submit();">Add to
+                                        favorites</a>
+                                    {!! Form::open(['method' => 'POST', 'route' => ['listings.favorites.store', [$area, $listing]],
+                                                    'class' => 'hidden', 'id' => 'listings-favorite-form']) !!}
+                                    {!! Form::close() !!}
+                                </li>
+                            @else
+
+                            @endif
                         </nav>
                     </div>
                 </div>

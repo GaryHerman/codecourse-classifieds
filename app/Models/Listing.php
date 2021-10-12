@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Eloquent\OrderableTrait;
+use App\Traits\Eloquent\PivotOrderableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ class Listing extends Model
     use HasFactory;
     use SoftDeletes;
     use OrderableTrait;
+    use PivotOrderableTrait;
 
     // ------------------------------------------------------
     // Convenience Functions
@@ -78,5 +80,19 @@ class Listing extends Model
     public function area()
     {
         return $this->belongsTo(Area::class);
+    }
+
+    public function favorites()
+    {
+        return $this->morphToMany(User::class, 'favoriteable');
+    }
+
+    public function favoritedBy(User $user)
+    {
+        if (is_null($user)) {
+            return false;
+        }
+
+        return $this->favorites()->where('user_id', $user->id)->exists();
     }
 }

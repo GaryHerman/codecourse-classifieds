@@ -11,7 +11,9 @@
             <li><time>{{ $listing->created_at->diffForHumans() }}</time></li>
             <li>{{ $listing->user->name }}</li>
         </ul>
+
+        {{ isset($links) ? $links : '' }}
     </div>
 </div>
 
-@yield('links')
+

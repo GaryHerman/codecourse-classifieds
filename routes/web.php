@@ -3,6 +3,7 @@
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Listing\ListingController;
+use App\Http\Controllers\Listing\ListingFavoriteController;
 use App\Http\Controllers\User\AreaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,15 @@ Route::prefix('/{area}')->group(function () {
     });
 
     // Listings
+    Route::prefix('/listing')->namespace('Listing')->group(function () {
+        Route::get('/favorites', [ListingFavoriteController::class, 'index'])
+            ->name('listings.favorites.index');
+        Route::post('/{listing}/favorites', [ListingFavoriteController::class, 'store'])
+            ->name('listings.favorites.store');
+        Route::delete('/{listing}/favorites', [ListingFavoriteController::class, 'destroy'])
+            ->name('listings.favorites.destroy');
+    });
+
     Route::get('/{listing}', [ListingController::class, 'show'])
         ->name('listings.show');
 });
