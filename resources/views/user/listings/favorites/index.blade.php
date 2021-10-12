@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <h5>Your Favorited Listings</h5>
     <hr>
     @if ($listings->count())
@@ -14,5 +13,4 @@
     @endif
 
     {{ $listings->links('pagination::bootstrap-4') }}
-</div>
 @endsection

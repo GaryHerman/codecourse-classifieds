@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <h5>{{ $category->parent->name }} > {{ $category->name }}</h5>
     <hr>
     @if ($listings->count())
@@ -28,5 +27,4 @@
 
         @endforeach
     </div> --}}
-</div>
 @endsection

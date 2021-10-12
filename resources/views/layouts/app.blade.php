@@ -8,7 +8,10 @@
         @include('layouts.partials._nav')
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                @include('layouts.partials._alerts')
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>

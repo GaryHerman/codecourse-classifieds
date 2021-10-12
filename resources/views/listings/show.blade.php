@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
         <div class="{{ Auth::check() ? 'col-md-9' : 'col-md-12' }}">
             {{-- Listing Information --}}
@@ -58,8 +57,6 @@
                                                     'class' => 'hidden', 'id' => 'listings-favorite-form']) !!}
                                     {!! Form::close() !!}
                                 </li>
-                            @else
-
                             @endif
                         </nav>
                     </div>
@@ -67,5 +64,4 @@
             </div>
         @endif
     </div>
-</div>
 @endsection
