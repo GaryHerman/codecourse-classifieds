@@ -12,7 +12,7 @@
                 <div class="card-body">
                     {!! nl2br(e($listing->body)) !!}
                     <hr>
-                    <p>Viewed x times</p>
+                    <p>Viewed {{ $listing->views() }} times</p>
                 </div>
             </div>
             {{-- User Information --}}

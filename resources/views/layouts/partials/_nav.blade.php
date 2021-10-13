@@ -32,6 +32,10 @@
                     @endif
                 @else
                     <li class="nav-item m-auto">
+                        <a href="{{ route('listings.viewed.index', [$area]) }}">Recently Viewed</a>
+                        <span class="text-muted" style="margin: 0 10px;">|</span>
+                    </li>
+                    <li class="nav-item m-auto">
                         <a href="{{ route('listings.favorites.index', [$area]) }}">Favorites</a>
                         <span class="text-muted" style="margin: 0 10px;">|</span>
                     </li>

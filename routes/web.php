@@ -4,6 +4,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Listing\ListingController;
 use App\Http\Controllers\Listing\ListingFavoriteController;
+use App\Http\Controllers\Listing\ListingViewedController;
 use App\Http\Controllers\User\AreaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,8 @@ Route::prefix('/{area}')->group(function () {
             ->name('listings.favorites.store');
         Route::delete('/{listing}/favorites', [ListingFavoriteController::class, 'destroy'])
             ->name('listings.favorites.destroy');
+        Route::get('/viewed', [ListingViewedController::class, 'index'])
+            ->name('listings.viewed.index');
     });
 
     Route::get('/{listing}', [ListingController::class, 'show'])

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Listing;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\UserViewedListing;
 use App\Models\Area;
 use App\Models\Category;
 use App\Models\Listing;
@@ -23,6 +24,10 @@ class ListingController extends Controller
     {
         if (! $listing->live()) {
             abort(404);
+        }
+
+        if ($request->user()) {
+            dispatch(new UserViewedListing($request->user(), $listing));
         }
 
         return view('listings.show', compact('listing'));
