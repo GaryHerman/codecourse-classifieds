@@ -6,3 +6,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.form-group.is-invalid>label {
+    color: #e3342f;
+}

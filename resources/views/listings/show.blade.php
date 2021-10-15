@@ -24,17 +24,17 @@
                     @if (Auth::guest())
                         <p><a href="/register">Sign Up</a> or <a href="/login">Sign In</a> to contact listing owners.</p>
                     @else
-                        {!! Form::open([ 'method' => 'POST']) !!}
-                            <div class="form-group message @error('message') has-error @enderror">
+                        {!! Form::open(['route' => ['listings.contact.store', [$area, $listing]], 'method' => 'POST']) !!}
+
+                            <div class="form-group @error('message') is-invalid @enderror">
                                 {!! Form::label('message') !!}
-                                {!! Form::textarea('message', null, ['class' => 'form-control', 'rows' => 4]) !!}
+                                {!! Form::textarea('message', null, ['class' => 'form-control '. ($errors->has('message') ? 'is-invalid' : ''), 'rows' => 4]) !!}
                                 @error('message')
-                                <span class="help-block">{{ $message }}</span>
+                                    <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                {!! Form::submit('Send', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' =>
-                                'submit-btn']) !!}
+                                {!! Form::submit('Send', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' => 'submit-btn']) !!}
                                 <span class="form-text text-muted"><i>This will email the listings creator and they will be able to reply to
                                         you directly via email.</i></span>
                             </div>

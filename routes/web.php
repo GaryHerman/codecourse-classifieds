@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Listing\ListingContactController;
 use App\Http\Controllers\Listing\ListingController;
 use App\Http\Controllers\Listing\ListingFavoriteController;
 use App\Http\Controllers\Listing\ListingViewedController;
@@ -49,6 +50,16 @@ Route::prefix('/{area}')->group(function () {
             ->name('listings.favorites.destroy');
         Route::get('/viewed', [ListingViewedController::class, 'index'])
             ->name('listings.viewed.index');
+        Route::post('/{listing}/contact', [ListingContactController::class, 'store'])
+            ->name('listings.contact.store');
+
+        // Added Auth middleware in controllers where needed above, trying route grouping here as well
+        Route::middleware(['auth'])->group(function () {
+            Route::get('/create', [ListingController::class, 'create'])
+                ->name('listings.create');
+            Route::post('/store', [ListingController::class, 'store'])
+                ->name('listings.store');
+        });
     });
 
     Route::get('/{listing}', [ListingController::class, 'show'])
