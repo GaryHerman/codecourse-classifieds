@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Listing;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreListingFormRequest;
+use App\Http\Requests\UpdateListingFormRequest;
 use App\Jobs\UserViewedListing;
 use App\Models\Area;
 use App\Models\Category;
@@ -39,18 +40,45 @@ class ListingController extends Controller
         return view('listings.create');
     }
 
-    public function store(StoreListingFormRequest $request)
+    public function store(StoreListingFormRequest $request, Area $area)
     {
         $listing = new Listing;
 
-        $listing->title = $request->title;
-        $listing->body = $request->body;
+        $listing->title       = $request->title;
+        $listing->body        = $request->body;
         $listing->category_id = $request->category_id;
-        $listing->area_id = $request->area_id;
+        $listing->area_id     = $request->area_id;
         $listing->user()->associate($request->user());
 
         $listing->save();
 
+        return redirect()->route('listings.edit', [$area, $listing]);
+    }
 
+    public function edit(Request $request, Area $area, Listing $listing)
+    {
+        $this->authorize('edit', $listing);
+
+        return view('listings.edit', compact('listing'));
+    }
+
+    public function update(UpdateListingFormRequest $request, Area $area, Listing $listing)
+    {
+        $this->authorize('update', $listing);
+
+        $listing->title   = $request->title;
+        $listing->body    = $request->body;
+        $listing->area_id = $request->area_id;
+
+        // Categories can only be updated if the Listing is NOT currently live
+        if (! $listing->live()) {
+            $listing->category_id = $request->category_id;
+        }
+
+        $listing->save();
+
+        // Check if payment button has been clicked
+
+        return back()->withSuccess('Listing updated successfully.');
     }
 }

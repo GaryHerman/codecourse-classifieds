@@ -30,6 +30,37 @@ class Listing extends Model
     }
 
     // ------------------------------------------------------
+    // Functions
+    // ------------------------------------------------------
+
+    public function ownedByUser(User $user)
+    {
+        return $this->user->id === $user->id;
+    }
+
+    public function favoritedBy(User $user)
+    {
+        if (is_null($user)) {
+            return false;
+        }
+
+        return $this->favorites()->where('user_id', $user->id)->exists();
+    }
+
+    public function viewedUsers()
+    {
+        return $this->belongsToMany(User::class, 'user_listing_views')->withTimestamps()->withPivot(['count']);
+    }
+
+    public function views()
+    {
+        // This is one way to do this, adds a query but may be useful later
+        // return array_sum($this->viewedUsers->pluck('pivot.count')->toArray());
+
+        return $this->viewedUsers()->sum('count');
+    }
+
+    // ------------------------------------------------------
     // Scopes
     // ------------------------------------------------------
 
@@ -85,27 +116,5 @@ class Listing extends Model
     public function favorites()
     {
         return $this->morphToMany(User::class, 'favoriteable');
-    }
-
-    public function favoritedBy(User $user)
-    {
-        if (is_null($user)) {
-            return false;
-        }
-
-        return $this->favorites()->where('user_id', $user->id)->exists();
-    }
-
-    public function viewedUsers()
-    {
-        return $this->belongsToMany(User::class, 'user_listing_views')->withTimestamps()->withPivot(['count']);
-    }
-
-    public function views()
-    {
-        // This is one way to do this, adds a query but may be useful later
-        // return array_sum($this->viewedUsers->pluck('pivot.count')->toArray());
-
-        return $this->viewedUsers()->sum('count');
     }
 }

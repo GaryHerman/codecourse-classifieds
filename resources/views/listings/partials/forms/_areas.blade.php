@@ -6,7 +6,7 @@
                 @foreach ($country->children as $state)
                     <optgroup label="{{ $state->name }}">
                         @foreach ($state->children as $city)
-                            @if ((isset($listing) && $listing->area_id == $child->id) ||
+                            @if ((isset($listing)   && $listing->area_id == $city->id) ||
                                  (! isset($listing) && $area->id == $city->id && ! old('area_id')) ||
                                  (old('area_id') == $city->id))
                                 <option value="{{ $city->id }}" selected="selected">{{ $city->name }}</option>
