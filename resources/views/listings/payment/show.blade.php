@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
@@ -9,8 +10,9 @@
 
             <div class="card-body">
                 @if ($listing->cost() == 0)
-                    {!! Form::open(['route' => ['listings.payment.store', [$area]], 'method' => 'PATCH']) !!}
-                        <p>There is no cost for this listing, please continue to publish this listing.</p>
+                    {!! Form::open(['route' => ['listings.payment.update', [$area, $listing]], 'method' => 'PATCH']) !!}
+                        <p>Total Cost for this Listing: ${{ number_format($listing->cost(), 2) }}</p>
+                        <p>Continue to publish this listing, no payment required.</p>
                         <div class="form-group">
                             {!! Form::submit('Publish', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' =>
                             'submit-btn']) !!}

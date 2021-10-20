@@ -15,6 +15,10 @@ class Listing extends Model
     use OrderableTrait;
     use PivotOrderableTrait;
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     // ------------------------------------------------------
     // Convenience Functions
     // ------------------------------------------------------

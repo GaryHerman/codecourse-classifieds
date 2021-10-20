@@ -65,10 +65,27 @@ class ListingPaymentController extends Controller
         }
 
         $listing->live = true;
-        $listing->created_at = Carbon::now();
+        $listing->published_at = Carbon::now();
         $listing->save();
 
-        // TODO: Change this to published_date and dont use created_at date
         return redirect()->route('listings.show', [$area, $listing])->withSuccess('Payment successfully applied.  This listing is now live.');
+    }
+
+    // Used when listings have no cost and therefore require NO payment method
+    public function update(Request $request, Area $area, Listing $listing)
+    {
+        // Authorize
+        $this->authorize('touch', $listing);
+
+        // Verify that this listing shouldn't have a cost associated to it, if not - redirect back
+        if ($listing->cost() > 0) {
+            return back()->withWarning('This listing is not free and cannot be processed without payment.');
+        }
+
+        $listing->live = true;
+        $listing->published_at = Carbon::now();
+        $listing->save();
+
+        return redirect()->route('listings.show', [$area, $listing])->withSuccess('This listing is now live.');
     }
 }

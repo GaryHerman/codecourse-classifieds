@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Area;
 use App\Models\Category;
 use App\View\Composers\AreaComposer;
+use App\View\Composers\NavigationComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
         // View::composer('dashboard', function ($view) {});
 
         View::composer('*', AreaComposer::class);
+        View::composer('layouts.partials._nav', NavigationComposer::class);
 
         View::composer(['listings.partials.forms._categories'], function ($view) {
             $categories = Category::get()->toTree();

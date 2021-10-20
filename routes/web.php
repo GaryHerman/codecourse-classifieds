@@ -7,6 +7,8 @@ use App\Http\Controllers\Listing\ListingContactController;
 use App\Http\Controllers\Listing\ListingController;
 use App\Http\Controllers\Listing\ListingFavoriteController;
 use App\Http\Controllers\Listing\ListingPaymentController;
+use App\Http\Controllers\Listing\ListingPublishedController;
+use App\Http\Controllers\Listing\ListingUnpublishedController;
 use App\Http\Controllers\Listing\ListingViewedController;
 use App\Http\Controllers\User\AreaController;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +65,15 @@ Route::prefix('/{area}')->group(function () {
             ->name('listings.payment.show');
         Route::post('/{listing}/payment', [ListingPaymentController::class, 'store'])
             ->name('listings.payment.store');
+        // Free Payment Route - for listings that cost nothing (no payment actually required)
+        Route::patch('/{listing}/payment', [ListingPaymentController::class, 'update'])
+            ->name('listings.payment.update');
+
+        // Manage Listings
+        Route::get('/unpublished', [ListingUnpublishedController::class, 'index'])
+            ->name('listings.unpublished.index');
+        Route::get('/published', [ListingPublishedController::class, 'index'])
+            ->name('listings.published.index');
 
         // Added Auth middleware in controllers where needed above, trying route grouping here as well
         Route::middleware(['auth'])->group(function () {
@@ -74,6 +85,8 @@ Route::prefix('/{area}')->group(function () {
                 ->name('listings.edit');
             Route::patch('/{listing}/update', [ListingController::class, 'update'])
                 ->name('listings.update');
+            Route::delete('/{listing}', [ListingController::class, 'destroy'])
+                ->name('listings.destroy');
         });
     });
 
