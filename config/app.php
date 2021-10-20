@@ -177,6 +177,7 @@ return [
 
         // Provider for View Composers and Registration of View Composers
         App\Providers\ComposerServiceProvider::class,
+        App\Providers\BraintreeServiceProvider::class,
 
     ],
 

@@ -32,8 +32,13 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            {!! Form::submit('Save', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' => 'submit-btn']) !!}
-                            <span class="form-text text-muted"><i>Help Text Here</i></span>
+                            @if (! $listing->live())
+                                {!! Form::submit('Save', ['class' => 'float-left btn btn-primary', 'id' => 'publish-btn', 'name' => 'submit-btn']) !!}
+                                {!! Form::submit('Continue to Payment', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' => 'payment']) !!}
+                            @else
+                                {!! Form::submit('Save', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' => 'submit-btn']) !!}
+                            @endif
+                            {{-- <span class="form-text text-muted"><i>Help Text Here</i></span> --}}
                         </div>
                     {!! Form::close() !!}
                 </div>

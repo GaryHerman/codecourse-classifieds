@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\BrainTreeController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Listing\ListingContactController;
 use App\Http\Controllers\Listing\ListingController;
 use App\Http\Controllers\Listing\ListingFavoriteController;
+use App\Http\Controllers\Listing\ListingPaymentController;
 use App\Http\Controllers\Listing\ListingViewedController;
 use App\Http\Controllers\User\AreaController;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
+
+Route::get('/braintree/token', [BrainTreeController::class, 'token'])
+    ->name('braintree.token');
 
 Route::get('/user/area/{area}', [AreaController::class, 'store'])
     ->name('user.area.store');
@@ -52,6 +57,12 @@ Route::prefix('/{area}')->group(function () {
             ->name('listings.viewed.index');
         Route::post('/{listing}/contact', [ListingContactController::class, 'store'])
             ->name('listings.contact.store');
+
+        // Payment Routes
+        Route::get('/{listing}/payment', [ListingPaymentController::class, 'show'])
+            ->name('listings.payment.show');
+        Route::post('/{listing}/payment', [ListingPaymentController::class, 'store'])
+            ->name('listings.payment.store');
 
         // Added Auth middleware in controllers where needed above, trying route grouping here as well
         Route::middleware(['auth'])->group(function () {

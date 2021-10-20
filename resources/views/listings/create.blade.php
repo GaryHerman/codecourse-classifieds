@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::submit('Save', ['class' => 'float-right btn btn-primary', 'id' => 'publish-btn', 'name' => 'submit-btn']) !!}
-                            <span class="form-text text-muted"><i>Help Text Here</i></span>
+                            {{-- <span class="form-text text-muted"><i>Help Text Here</i></span> --}}
                         </div>
                     {!! Form::close() !!}
                 </div>
