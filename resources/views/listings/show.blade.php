@@ -48,7 +48,7 @@
                 <div class="card">
                     <div class="card-body">
                         <nav class="nav flex-column">
-                            <li class="nav-item"><a href="">Email to a friend</a></li>
+                            <li class="nav-item"><a href="{{ route('listings.share.index', [$area, $listing]) }}">Email to a friend</a></li>
                             @if (! $listing->favoritedBy(Auth::user()))
                                 <li class="nav-item">
                                     <a href="#" onclick="event.preventDefault(); getElementById('listings-favorite-form').submit();">Add to

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('listings.partials._search')
+
     <h5>{{ $category->parent->name }} > {{ $category->name }}</h5>
     <hr>
     @if ($listings->count())

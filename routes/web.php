@@ -8,6 +8,7 @@ use App\Http\Controllers\Listing\ListingController;
 use App\Http\Controllers\Listing\ListingFavoriteController;
 use App\Http\Controllers\Listing\ListingPaymentController;
 use App\Http\Controllers\Listing\ListingPublishedController;
+use App\Http\Controllers\Listing\ListingShareController;
 use App\Http\Controllers\Listing\ListingUnpublishedController;
 use App\Http\Controllers\Listing\ListingViewedController;
 use App\Http\Controllers\User\AreaController;
@@ -74,6 +75,11 @@ Route::prefix('/{area}')->group(function () {
             ->name('listings.unpublished.index');
         Route::get('/published', [ListingPublishedController::class, 'index'])
             ->name('listings.published.index');
+
+        Route::get('/{listing}/share', [ListingShareController::class, 'index'])
+            ->name('listings.share.index');
+        Route::post('/{listing}/share', [ListingShareController::class, 'store'])
+            ->name('listings.share.store');
 
         // Added Auth middleware in controllers where needed above, trying route grouping here as well
         Route::middleware(['auth'])->group(function () {

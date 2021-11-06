@@ -1,6 +1,6 @@
 {{ $listing->user->name }},<br><br>
 
-{{ $sender->name }} has contacted you about this listing, <a href="{{ route('listings.show', [$listing->area, $listing]) }}"></a> {{ $listing->title }}
+{{ $sender->name }} has contacted you about this listing, <a href="{{ route('listings.show', [$listing->area, $listing]) }}"> {{ $listing->title }}</a>
 
 <br><br>---<br>
 {!! nl2br(e($body)) !!}

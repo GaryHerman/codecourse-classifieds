@@ -7,6 +7,7 @@ use App\Traits\Eloquent\PivotOrderableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Listing extends Model
 {
@@ -14,6 +15,7 @@ class Listing extends Model
     use SoftDeletes;
     use OrderableTrait;
     use PivotOrderableTrait;
+    use Searchable;
 
     protected $casts = [
         'published_at' => 'datetime',
@@ -62,6 +64,18 @@ class Listing extends Model
         // return array_sum($this->viewedUsers->pluck('pivot.count')->toArray());
 
         return $this->viewedUsers()->sum('count');
+    }
+
+    public function toSearchableArray()
+    {
+        $properties = $this->toArray();
+
+        $properties['created_at_human'] = $this->created_at->diffForHumans();
+        $properties['user']             = $this->user;
+        $properties['category']         = $this->category;
+        $properties['area']             = $this->area;
+
+        return $properties;
     }
 
     // ------------------------------------------------------

@@ -5,6 +5,7 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 Vue.component('payment-form', require('./components/Payment.vue').default);
+Vue.component('listing-search', require('./components/Search.vue').default);
 
 const app = new Vue({
     el: '#app',

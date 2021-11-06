@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('listings.partials._search')
+
     <div class="row justify-content-center">
         @foreach ($categories as $category)
             <div class="col-md-4">

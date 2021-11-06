@@ -41,7 +41,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Create a area slug on model creating event.  Slug can be parsed back in to determine structure because,
         // '.' means one tree level difference, '-' means replacement for spaces
-        $tree = $nestedVar->ancestors->reverse()->push($nestedVar);
+        $tree = $nestedVar->ancestors->collect()->push($nestedVar);
+
+        logger($tree);
 
         $slug = $tree->map(function ($e) {
             return Str::of($e->name)->slug('-');
